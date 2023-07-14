@@ -7,7 +7,7 @@ const newCertificate = async (req, res) => {
 
   if (req.files?.image) {
     const result = await uploadImage(req.files.image.tempFilePath);
-    console.log(result);
+    
 
     certificate.image = {
       public_id: result.public_id,

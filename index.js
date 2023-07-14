@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import projectRoutes from "./routes/projectRoutes.js";
 import certificateRoutes from "./routes/certificateRoutes.js";
 import fileUpload from "express-fileupload";
+import cors from 'cors'
 
 const app = Express();
 app.use(Express.json());
@@ -17,6 +18,22 @@ dotenv.config();
 
 //?Conectar base de datos
 connectDB();
+
+// //? configurar cors
+  const whiteList =[process.env.FRONTEND_URL]
+  const corsOptions ={
+   origin: function(origin,callback){
+     if(whiteList.includes(origin)){
+       //puede consultar la api
+       callback(null,true)
+     }else{
+       //no esta permitido
+       callback(new Error("Error de Cors"))
+     }
+   }
+  }
+
+  app.use(cors(corsOptions))
 
 //?Routing
 app.use("/api/projects", projectRoutes);
