@@ -6,6 +6,7 @@ const newCertificate = async (req, res) => {
   const certificate = new Certificate(req.body);
 
   if (req.files?.image) {
+    console.log(req.files?.image)
     const result = await uploadImage(req.files.image.tempFilePath);
     
 
@@ -16,6 +17,7 @@ const newCertificate = async (req, res) => {
 
     await fs.unlink(req.files.image.tempFilePath);
   }
+  
   try {
     const saveCertificate = await certificate.save();
     res.json(saveCertificate);

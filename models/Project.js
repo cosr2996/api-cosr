@@ -17,11 +17,14 @@ const projectSchema = mongoose.Schema({
     trim: true,
   },
   finished: {
-    type: Date,
-    default: Date.now(),
+    type: String
   },
   image: {
+    secure_url: String, public_id: String
+  },
+  url: {
     type: String,
+    required: true,
   },
 });
 

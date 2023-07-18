@@ -1,7 +1,22 @@
 import Project from "../models/Project.js";
+import { deleteImage, uploadImage } from "../helpers/cloudinary.js";
+import fs from "fs-extra";
 
 const newProject = async (req, res) => {
   const project = new Project(req.body);
+
+  if (req.files?.image) {
+    console.log(req.files?.image)
+    const result = await uploadImage(req.files.image.tempFilePath);
+    
+
+    project.image = {
+      public_id: result.public_id,
+      secure_url: result.secure_url,
+    };
+
+    await fs.unlink(req.files.image.tempFilePath);
+  }
 
   try {
     const savedProject = await project.save();
